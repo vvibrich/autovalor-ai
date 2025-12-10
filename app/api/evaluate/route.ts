@@ -4,6 +4,8 @@ import { vehicleFormSchema, evaluationResponseSchema } from "@/lib/validators";
 import { generateEvaluationPrompt } from "@/lib/aiPrompt";
 import { createClient } from "@/lib/supabase/server";
 
+export const runtime = "nodejs";
+
 export async function POST(request: Request) {
     try {
         const supabase = await createClient();

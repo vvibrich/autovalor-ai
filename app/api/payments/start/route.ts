@@ -6,6 +6,8 @@ const client = new MercadoPagoConfig({
     accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN!,
 });
 
+export const runtime = "nodejs";
+
 export async function POST(request: Request) {
     try {
         const supabase = await createClient();
