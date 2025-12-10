@@ -51,8 +51,8 @@ export async function POST(request: Request) {
                 ],
                 payer: {
                     email: user.email!,
-                    // name: user.user_metadata.name?.split(" ")[0] || "Cliente",
-                    // surname: user.user_metadata.name?.split(" ").slice(1).join(" ") || "AutoValor",
+                    name: user.user_metadata.name?.split(" ")[0] || "Cliente",
+                    surname: user.user_metadata.name?.split(" ").slice(1).join(" ") || "AutoValor",
                 },
                 back_urls: {
                     success: `${process.env.PROJECT_URL}/dashboard/results/${vehicle_id}?status=approved`,
@@ -88,8 +88,12 @@ export async function POST(request: Request) {
 
         return NextResponse.json({ url: result.init_point });
 
-    } catch (error) {
+    } catch (error: any) {
         console.error("Checkout Error:", error);
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+        return NextResponse.json({
+            error: "Erro ao criar preferência de pagamento",
+            details: error.message || String(error),
+            cause: error.cause
+        }, { status: 500 });
     }
 }

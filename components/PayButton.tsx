@@ -22,15 +22,18 @@ export function PayButton({ evaluationId }: PayButtonProps) {
 
             const data = await res.json();
 
+            if (!res.ok) {
+                throw new Error(data.details || data.error || "Erro desconhecido no servidor");
+            }
+
             if (data.url) {
                 window.location.href = data.url;
             } else {
-                alert("Erro ao gerar link de pagamento.");
-                setLoading(false);
+                throw new Error("URL de pagamento não retornada pelo Mercado Pago");
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error("Payment error:", error);
-            alert("Erro ao processar pagamento.");
+            alert(`Erro: ${error.message}`);
             setLoading(false);
         }
     };
