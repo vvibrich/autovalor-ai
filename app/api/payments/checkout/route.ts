@@ -59,6 +59,10 @@ export async function POST(request: Request) {
                     email: user.email!,
                     name: user.user_metadata.name?.split(" ")[0] || "Cliente",
                     surname: user.user_metadata.name?.split(" ").slice(1).join(" ") || "AutoValor",
+                    identification: user.user_metadata.cpf ? {
+                        type: "CPF",
+                        number: user.user_metadata.cpf
+                    } : undefined
                 },
                 back_urls: {
                     success: `${process.env.PROJECT_URL}/dashboard/results/${vehicle_id}?status=approved`,
@@ -74,7 +78,6 @@ export async function POST(request: Request) {
                 },
                 payment_methods: {
                     excluded_payment_types: [],
-                    default_payment_method_id: "pix",
                     installments: 1
                 }
             },
