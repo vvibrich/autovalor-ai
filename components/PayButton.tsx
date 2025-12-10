@@ -20,7 +20,16 @@ export function PayButton({ evaluationId }: PayButtonProps) {
                 body: JSON.stringify({ vehicle_id: evaluationId }),
             });
 
-            const data = await res.json();
+            const contentType = res.headers.get("content-type");
+            let data;
+
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                data = await res.json();
+            } else {
+                const text = await res.text();
+                console.error("Non-JSON response:", text);
+                throw new Error(`Erro do servidor (${res.status}): ${text.slice(0, 100)}...`);
+            }
 
             if (!res.ok) {
                 throw new Error(data.details || data.error || "Erro desconhecido no servidor");

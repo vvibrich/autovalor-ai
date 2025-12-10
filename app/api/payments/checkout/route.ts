@@ -42,6 +42,7 @@ export async function POST(request: Request) {
         console.log("Debug: User metadata:", JSON.stringify(user.user_metadata));
         console.log("Debug: Vehicle ID:", vehicle_id);
         console.log("Debug: Access Token exists:", !!process.env.MERCADO_PAGO_ACCESS_TOKEN);
+        console.log("Debug: PROJECT_URL:", process.env.PROJECT_URL);
 
         const result = await preference.create({
             body: {
