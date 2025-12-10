@@ -61,14 +61,11 @@ export async function POST(request: Request) {
                 notification_url: `${process.env.PROJECT_URL}/api/payments/webhook`,
                 external_reference: vehicle_id, // Important: We use this to link payment to evaluation
                 metadata: {
-                    vehicle_id: vehicle_id,
+                    vehicle_id: vehicle_id.toString().slice(0, 5),
                     user_id: user.id
                 },
                 payment_methods: {
-                    excluded_payment_types: [
-                        { id: "credit_card" },
-                        { id: "debit_card" }
-                    ],
+                    excluded_payment_types: [],
                     default_payment_method_id: "pix",
                     installments: 1
                 }
