@@ -47,10 +47,10 @@ export async function POST(request: Request) {
                         currency_id: "BRL",
                     },
                 ],
-                // payer: {
-                //     email: user.email!,
-                //     name: user.user_metadata.name || "Usuário",
-                // },
+                payer: {
+                    email: user.email!,
+                    name: user.user_metadata.name || "Usuário",
+                },
                 back_urls: {
                     success: `${process.env.PROJECT_URL}/dashboard/results/${vehicle_id}?status=approved`,
                     failure: `${process.env.PROJECT_URL}/dashboard/evaluate?status=failure`,
