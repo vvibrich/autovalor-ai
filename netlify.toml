@@ -6,7 +6,7 @@
 [functions]
   node_bundler = "esbuild"
   external_node_modules = ["mercadopago"]
-  included_files = ["**/*"]
+
 
 [[redirects]]
   from = "/api/*"
