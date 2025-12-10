@@ -49,7 +49,8 @@ export async function POST(request: Request) {
                 ],
                 payer: {
                     email: user.email!,
-                    name: user.user_metadata.name || "Usuário",
+                    // name: user.user_metadata.name?.split(" ")[0] || "Cliente",
+                    // surname: user.user_metadata.name?.split(" ").slice(1).join(" ") || "AutoValor",
                 },
                 back_urls: {
                     success: `${process.env.PROJECT_URL}/dashboard/results/${vehicle_id}?status=approved`,
