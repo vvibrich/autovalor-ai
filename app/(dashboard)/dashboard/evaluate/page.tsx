@@ -29,7 +29,7 @@ export default function EvaluatePage() {
                 .insert({
                     user_id: user.id,
                     vehicle_data: data,
-                    payment_status: "pending",
+                    payment_status: "approved", // TEMPORARY: Bypass payment
                 })
                 .select()
                 .single();
@@ -41,6 +41,11 @@ export default function EvaluatePage() {
                 return;
             }
 
+            // TEMPORARY: Bypass payment flow
+            router.push(`/dashboard/results/${evaluation.id}`);
+            return;
+
+            /*
             // 2. Create Checkout Preference & Redirect
             const res = await fetch("/api/payments/checkout", {
                 method: "POST",
@@ -64,6 +69,7 @@ export default function EvaluatePage() {
                 alert("Erro: URL de pagamento não gerada.");
                 setIsProcessing(false);
             }
+            */
 
         } catch (error) {
             console.error("Flow error:", error);

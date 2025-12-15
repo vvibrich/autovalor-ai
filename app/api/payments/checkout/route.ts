@@ -44,7 +44,9 @@ export async function POST(request: Request) {
         console.log("Debug: Access Token exists:", !!process.env.MERCADO_PAGO_ACCESS_TOKEN);
         console.log("Debug: PROJECT_URL:", process.env.PROJECT_URL);
 
-        const result = await preference.create({
+        const cpf = user.user_metadata.cpf ? user.user_metadata.cpf.replace(/\D/g, "") : undefined;
+
+        const preferenceData = {
             body: {
                 items: [
                     {
@@ -59,9 +61,9 @@ export async function POST(request: Request) {
                     email: user.email!,
                     name: user.user_metadata.name?.split(" ")[0] || "Cliente",
                     surname: user.user_metadata.name?.split(" ").slice(1).join(" ") || "AutoValor",
-                    identification: user.user_metadata.cpf ? {
+                    identification: cpf ? {
                         type: "CPF",
-                        number: user.user_metadata.cpf
+                        number: cpf
                     } : undefined
                 },
                 back_urls: {
@@ -81,7 +83,11 @@ export async function POST(request: Request) {
                     installments: 1
                 }
             },
-        });
+        };
+
+        console.log("Debug: Preference Payload:", JSON.stringify(preferenceData, null, 2));
+
+        const result = await preference.create(preferenceData);
 
         // Save initial payment record (optional, but good for tracking attempts)
         // We can use the preference ID or just wait for the webhook.
